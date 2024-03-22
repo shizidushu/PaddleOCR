@@ -10,7 +10,6 @@ __pycache__/
 inference/
 inference_results/
 output/
-train_data/
 log/
 *.DS_Store
 *.vs
@@ -32,3 +31,5 @@ paddleocr.egg-info/
 /deploy/android_demo/app/cache/
 test_tipc/web/models/
 test_tipc/web/node_modules/
+
+pretrain_models

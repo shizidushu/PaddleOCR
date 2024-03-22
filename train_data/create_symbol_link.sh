@@ -1,0 +1,1 @@
+ln -s /mnt/d/0-Datasets/public/OCR-Datasets/ICDAR-2015 icdar2015
