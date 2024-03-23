@@ -31,19 +31,20 @@ from io import BytesIO
 from PIL import Image
 
 
-def _import_file(module_name, file_path, make_importable=False):
-    spec = importlib.util.spec_from_file_location(module_name, file_path)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    if make_importable:
-        sys.modules[module_name] = module
-    return module
+# def _import_file(module_name, file_path, make_importable=False):
+#     spec = importlib.util.spec_from_file_location(module_name, file_path)
+#     module = importlib.util.module_from_spec(spec)
+#     spec.loader.exec_module(module)
+#     if make_importable:
+#         sys.modules[module_name] = module
+#     return module
 
 
-tools = _import_file(
-    'tools', os.path.join(__dir__, 'tools/__init__.py'), make_importable=True)
-ppocr = importlib.import_module('ppocr', 'paddleocr')
-ppstructure = importlib.import_module('ppstructure', 'paddleocr')
+# tools = _import_file(
+#     'tools', os.path.join(__dir__, 'tools/__init__.py'), make_importable=True)
+# ppocr = importlib.import_module('ppocr', 'paddleocr')
+# ppstructure = importlib.import_module('ppstructure', 'paddleocr')
+
 from ppocr.utils.logging import get_logger
 from tools.infer import predict_system
 from ppocr.utils.utility import check_and_read, get_image_file_list, alpha_to_color, binarize_img

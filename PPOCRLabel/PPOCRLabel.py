@@ -55,6 +55,17 @@ from libs.editinlist import EditInList
 from libs.unique_label_qlist_widget import UniqueLabelQListWidget
 from libs.keyDialog import KeyDialog
 
+from shapely.geometry import Polygon
+import pyclipper
+import imghdr
+from skimage.morphology._skeletonize import thin
+import imgaug
+import scipy.io as scio
+import lmdb
+import requests
+from PyQt5.Qt import QT_VERSION_STR
+import paddleocr
+
 __appname__ = 'PPOCRLabel'
 
 LABEL_COLORMAP = label_colormap()
@@ -109,7 +120,7 @@ class MainWindow(QMainWindow):
 
         if os.path.exists('./data/paddle.png'):
             result = self.ocr.ocr('./data/paddle.png', cls=True, det=True)
-            result = self.table_ocr('./data/paddle.png', return_ocr_result_in_table=True)
+            # result = self.table_ocr('./data/paddle.png', return_ocr_result_in_table=True)
 
         # For loading all image under a directory
         self.mImgList = []
@@ -2829,12 +2840,21 @@ def main():
     return app.exec_()
 
 
-if __name__ == '__main__':
+def resolve_path(path):
+    if getattr(sys, "frozen", False):
+        # If the 'frozen' flag is set, we are in bundled-app mode!
+        resolved_path = os.path.abspath(os.path.join(sys._MEIPASS, path))
+    else:
+        # Normal development mode. Use os.getcwd() or __file__ as appropriate in your case...
+        resolved_path = os.path.abspath(os.path.join(os.getcwd(), path))
 
-    resource_file = './libs/resources.py'
+    return resolved_path
+
+if __name__ == '__main__':
+    resource_file = resolve_path('./locallibs/resources.py')
     if not os.path.exists(resource_file):
-        output = os.system('pyrcc5 -o libs/resources.py resources.qrc')
-        assert output == 0, "operate the cmd have some problems ,please check  whether there is a in the lib " \
+        output = os.system(f'pyrcc5 -o {resource_file} resources.qrc')
+        assert output == 0, f"operate the cmd have some problems ,please check  whether there is a {resource_file} in the lib " \
                             "directory resources.py "
 
     sys.exit(main())
